@@ -5,7 +5,7 @@
   <link data-require="bootstrap-css@*" data-semver="3.3.1" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-  <?!= include('/style'); ?>
+  <?!= include('style'); ?>
   <?!= include('navbar'); ?>
 </head>
 
@@ -15,7 +15,7 @@
 
     <div class="jumbotron col-lg-8 col-lg-offset-2">
       <div class="title">
-        <h1 class="text-center">chckd <small>Check In/Return</small></h1>
+        <h1 class="text-center" id="jumbotron-title">chckd <small>Check In/Return</small></h1>
       </div> <!-- close title -->
       <div id="scan">
         <form class="form-horizontal">
@@ -29,7 +29,7 @@
 
     </div> <!-- close jumbotron -->
 
-    <div class="col-md-4 col-md-offset-4">
+    <div class="col-md-4 col-md-offset-4" hidden="true">
       <div class="panel panel-primary">
         <div class="panel-heading">
           <h3 class="panel-title">Panel title</h3>
