@@ -51,7 +51,6 @@ $(document).ready(setFocus);
 
 $('#studentScan').on("keyup", function(){
   if(event.keyCode == 13){
-    console.log("This is working");
     $('#submitBtn').trigger("click");
   }
 });
@@ -66,7 +65,6 @@ function setFocus() {
 
 
 function updateResults(resultHtml){
-  console.log("this shit works!");
   document.getElementById("myform").reset();
   setFocus();
   var outputDiv = document.getElementById('results');
