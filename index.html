@@ -18,27 +18,22 @@
         <h1 class="text-center" id="jumbotron-title">chckd <small>Check In/Return</small></h1>
       </div> <!-- close title -->
       <div id="scan">
-        <form class="form-horizontal">
-          <div class="form-group">
-            <div class="col-sm-2 col-sm-offset-5">
-              <input type="text" class="form-control" id="studentScan" placeholder="Scan device tag">
-            </div>
-          </div> <!-- close form-group -->
+      <div class="col-sm-4 col-sm-offset-4">
+        <form class="form-inline" id="myform" method="get" action="" onsubmit="return false">
+          
+            <div class="form-group">
+              <input type="text" class="form-control" name="studentScan" id="studentScan" placeholder="Scan device tag">
+            </div> <!-- close form-group -->
+            <button type="button" class="btn btn-primary" id="submitBtn"
+            onclick="google.script.run.withSuccessHandler(updateResults).processScan(this.parentNode)">Submit</button>
+          
         </form> <!-- close form -->
+        </div>
       </div> <!-- close scan -->
 
     </div> <!-- close jumbotron -->
 
-    <div class="col-md-4 col-md-offset-4" hidden="true">
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title">Panel title</h3>
-        </div>
-        <div class="panel-body">
-          Panel content
-        </div>
-      </div> <!-- close panel -->
-    </div>
+    <div id="results"></div>
 
   </div> <!-- close container -->
 
@@ -50,4 +45,51 @@
 
 <script>
 $('#navbar').load('navbar.html')
+$(document).ready(setFocus);
+    
+    
+
+$('#studentScan').on("keyup", function(){
+  if(event.keyCode == 13){
+    console.log("This is working");
+    $('#submitBtn').trigger("click");
+  }
+});
+
+
+
+function setFocus() {
+  var input = document.getElementById ("studentScan");
+  input.focus ();
+}
+
+
+
+function updateResults(resultHtml){
+  console.log("this shit works!");
+  document.getElementById("myform").reset();
+  setFocus();
+  var outputDiv = document.getElementById('results');
+  outputDiv.innerHTML = resultHtml;
+}
+
+
+
+function toggle_visibility(id) {
+ var e = document.getElementById(id);
+ if(e.style.display == 'block')
+    e.style.display = 'none';
+ else
+    e.style.display = 'block';
+}
+
+
+
+// Requires jQuery!
+jQuery.ajax({
+            url: "https://newvisionstech.atlassian.net/s/99f0bc150bececa79c546d639e93a2f9-T/en_US3m6qvk/64014/14/1.4.24/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs.js?locale=en-US&collectorId=e43119db",
+        type: "get",
+    cache: true,
+    dataType: "script"
+});
 </script>
