@@ -34,18 +34,37 @@ function processScan(formObj){
     status: !student.status,
     grade: student.grade || "Not assigned"
   };
-  debugger;
-  if(student !="Tag does not exist"){
-    addScanToSheet(scan);
-  }
-  
-//  displayResults();
-  
+
   if(student != "Tag does not exist"){
+    addScanToSheet(scan);
     changeDeviceState(scan);
+    
+    switch(scan.name != "Not assigned"){
+      case true:
+        if(scan.status === true){
+          return displayCheckInInfo(scan)
+        }
+        else{
+          return displayReturnInfo(scan);
+        }
+        break;
+        
+      case false:
+        if(scan.status === true){
+          return displayWarningInfo(scan)
+        }
+        else{
+          return displayReturnInfo(scan);
+        }
+        break;
+        
+      default:
+        break;
+    }
   }
-  
-   return displayCheckInInfo(scan);
+  else{
+    return displayRejectedInfo(scan);
+  }
 }
 
 
@@ -84,7 +103,7 @@ function test(){
   var test, formObj;
   
   formObj = {
-    studentScan: "somethingelse"
+    studentScan: "AMS310"
   }
   
   processScan(formObj);
@@ -106,9 +125,8 @@ function changeDeviceState(scan){
   
   tagRecords = deviceTags.map(getTagRecord);
   tagIndex = tagRecords.indexOf(tagNumber);
-  statusRange = studentSheet.getRange(tagIndex+2,6,1,1);
+  statusRange = studentSheet.getRange(tagIndex+2,5,1,1);
   statusRange.setValue(status);
-  debugger;
 }
 
 
@@ -127,6 +145,26 @@ function displayReturnInfo(scan){
   var test, panel;
   
   panel = HtmlService.createTemplateFromFile('Return');
+  panel.data = scan;
+  return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
+}
+
+
+
+function displayWarningInfo(scan){
+  var test, panel;
+  
+  panel = HtmlService.createTemplateFromFile('Warning');
+  panel.data = scan;
+  return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
+}
+
+
+
+function displayRejectedInfo(scan){
+  var test, panel;
+  
+  panel = HtmlService.createTemplateFromFile('Rejected');
   panel.data = scan;
   return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
 }

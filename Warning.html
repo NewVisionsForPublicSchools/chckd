@@ -1,10 +1,10 @@
 <div class="col-md-4 col-md-offset-4">
-  <div class="panel panel-success">
+  <div class="panel panel-warning">
     <div class="panel-heading">
-      <h3 class="panel-title text-center"><?= data.tagNumber ?>: Check In</h3>
+      <h3 class="panel-title text-center"><?= data.tagNumber ?>: Check In Warning</h3>
     </div>
     <div class="panel-body">
-      
+      <p class="text-danger text-center">This tag has been checked in but is not currently assigned to a student</p>
       <p class="lead"><b>Student:</b> <?= data.name ?></p>
       <p class="lead"><b>Bin:</b> <?= data.binNumber ?></p>
       <p class="text-center"><small><?= data.timeStamp ?></small></p>
