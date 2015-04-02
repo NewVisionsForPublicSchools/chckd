@@ -45,8 +45,7 @@ function processScan(formObj){
     changeDeviceState(scan);
   }
   
-//  debugger;
-  return HtmlService.createTemplateFromFile('Panel.html').evaluate().getContent();
+   return displayCheckInInfo(scan);
 }
 
 
@@ -110,4 +109,24 @@ function changeDeviceState(scan){
   statusRange = studentSheet.getRange(tagIndex+2,6,1,1);
   statusRange.setValue(status);
   debugger;
+}
+
+
+
+function displayCheckInInfo(scan){
+  var test, panel;
+  
+  panel = HtmlService.createTemplateFromFile('Check In');
+  panel.data = scan;
+  return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
+}
+
+
+
+function displayReturnInfo(scan){
+  var test, panel;
+  
+  panel = HtmlService.createTemplateFromFile('Return');
+  panel.data = scan;
+  return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
 }
