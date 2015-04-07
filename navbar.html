@@ -11,26 +11,35 @@
       
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse bs-example-masthead-collapse-1">
-        <form class="navbar-form navbar-left" role="search">
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="Search student">
-          </div>
-          <button type="submit" class="btn btn-primary">Search</button>
-        </form>
-        <ul class="nav navbar-nav navbar-right">
-          <li>
-            <a href="#">Home</a>
-          </li>
-          <li>
-            <a href="#">Actionboard</a>
-          </li>
-          <li>
-            <a href="#">Admin</a>
-          </li>
-        </ul>
+
+        <div class="navbar-right">
+          <button type="button" class="btn btn-default navbar-btn" id="homeButton">Home</button>
+          <button type="button" class="btn btn-default navbar-btn" id="searchButton">Search</button>
+          <!-- <button type="button" class="btn btn-default navbar-btn" id="boardButton">Actionboard</button>
+          <button type="button" class="btn btn-default navbar-btn" id="adminButton">Admin</button> -->
+        </div>
       </div>
       <!-- /.navbar-collapse -->
     </div>
     <!-- /.container-fluid -->
   </nav>
 </html>
+
+
+
+<script>
+$('#searchButton').click(loadSearch);
+$('#homeButton').click(loadHome);
+//$('#boardButton').click(loadActionboard);
+//$('#adminButton').click(loadAdmin);
+
+function loadSearch(){
+  $('#home').addClass("hidden");
+  $('#searchPage').removeClass("hidden");
+}
+
+function loadHome(){
+  $('#searchPage').addClass("hidden");
+  $('#home').removeClass("hidden");
+}
+</script>

@@ -1,0 +1,47 @@
+  <div class="container-fluid hidden" id="searchPage">
+
+    <div class="jumbotron col-lg-8 col-lg-offset-2" id="searchTron">
+      <div class="title">
+        <h1 class="text-center" id="jumbotron-title">chckd <small>Search</small></h1>
+      </div> <!-- close title -->
+      <div id="search">
+      <div class="col-sm-4 col-sm-offset-4">
+        <form class="form-inline" id="searchForm" method="get" action="" onsubmit="return false">
+          
+            <div class="form-group">
+              <input type="text" class="form-control" name="studentSearch" id="studentSearch" placeholder="Search">
+            </div> <!-- close form-group -->
+            <button type="button" class="btn btn-primary" id="searchBtn"
+            onclick="google.script.run.withSuccessHandler(updateSearchResults).getStudent(this.parentNode)">Submit</button>
+          
+        </form> <!-- close form -->
+        </div>
+      </div> <!-- close scan -->
+
+    </div> <!-- close jumbotron -->
+
+    <div id="searchResults"></div>
+
+  </div> <!-- close container -->
+
+<script>
+$(document).ready(setFocus);
+
+$('#studentSearch').on("keyup", function(){
+  if(event.keyCode == 13){
+    $('#searchBtn').trigger("click");
+  }
+});
+
+function setFocus() {
+  var input = document.getElementById ("studentSearch");
+  input.focus ();
+}
+
+function updateSearchResults(resultHtml){
+  document.getElementById("searchForm").reset();
+  setFocus();
+  var outputDiv = document.getElementById('searchResults');
+  outputDiv.innerHTML = resultHtml;
+}
+</script>

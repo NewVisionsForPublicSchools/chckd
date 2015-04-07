@@ -7,11 +7,12 @@
   <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
   <?!= include('style'); ?>
   <?!= include('navbar'); ?>
+  <?!= include('search'); ?>
 </head>
 
 <body>
 
-  <div class="container-fluid">
+  <div class="container-fluid" id="home">
 
     <div class="jumbotron col-lg-8 col-lg-offset-2">
       <div class="title">
@@ -36,7 +37,7 @@
     <div id="results"></div>
 
   </div> <!-- close container -->
-
+   
 </body>
 
 </html>
@@ -80,14 +81,4 @@ function toggle_visibility(id) {
  else
     e.style.display = 'block';
 }
-
-
-
-// Requires jQuery!
-jQuery.ajax({
-            url: "https://newvisionstech.atlassian.net/s/99f0bc150bececa79c546d639e93a2f9-T/en_US3m6qvk/64014/14/1.4.24/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs.js?locale=en-US&collectorId=e43119db",
-        type: "get",
-    cache: true,
-    dataType: "script"
-});
 </script>

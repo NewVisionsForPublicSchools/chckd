@@ -134,7 +134,7 @@ function changeDeviceState(scan){
 function displayCheckInInfo(scan){
   var test, panel;
   
-  panel = HtmlService.createTemplateFromFile('Check In');
+  panel = HtmlService.createTemplateFromFile('Check_In');
   panel.data = scan;
   return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
 }
