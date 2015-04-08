@@ -4,8 +4,13 @@
       <h3 class="panel-title text-center">Search Results</h3>
     </div>
     <div class="panel-body">
-      <? for(var i=0;i<data.length;i++){ ?>
-        <p class="text-center"><b><?= data[i].tagNumber ?>: <?= data[i].student ?></b></p>
+      <? if(data.length > 0){ ?>
+        <? for(var i=0;i<data.length;i++){ ?>
+          <p class="text-center"><b><?= data[i].tagNumber ?>: <?= data[i].student ?></b></p>
+        <? } ?>
+      <? } ?>
+      <? if(data.length === 0){ ?>
+        <p class="text-center text-danger"><b>Results not found</b></p>
       <? } ?>
       <p class="text-center"><small><?= new Date() ?></small></p>
     </div>
