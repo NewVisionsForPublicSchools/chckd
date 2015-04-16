@@ -33,7 +33,7 @@ function getStudent(formObj){
   tagQueryResults = searchStringInArray(studentQuery, tags);
   binQueryResults = searchStringInArray(studentQuery, bins);
   records = records.concat(studentQueryResults).concat(tagQueryResults).concat(binQueryResults);
-   return displaySearchResults(records, students);
+  return displaySearchResults(records, students);
 }
 
 
@@ -52,8 +52,6 @@ function displaySearchResults(indexes, students){
   panel = HtmlService.createTemplateFromFile('search_results');
   panel.data = records;
   return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
-  
-  debugger;
 }
 
 
@@ -61,6 +59,6 @@ function displaySearchResults(indexes, students){
 function testSearch(){
   var test, formObj={};
   
-  formObj.search = "bin 2";
+  formObj.studentSearch = "ush";
   getStudent(formObj);
 }

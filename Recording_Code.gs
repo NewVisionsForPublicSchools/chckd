@@ -135,3 +135,14 @@ function reportTest(){
   data = getNotCheckedInData();
   debugger;
 }
+
+
+
+function refreshActionboard(){
+  var test, refreshed, actionData={};
+  
+  refreshed = new Date();
+  actionData.refreshed = refreshed;
+  
+  return actionData;
+}

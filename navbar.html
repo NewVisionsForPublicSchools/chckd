@@ -15,8 +15,8 @@
         <div class="navbar-right">
           <button type="button" class="btn btn-default navbar-btn" id="homeButton">Home</button>
           <button type="button" class="btn btn-default navbar-btn" id="searchButton">Search</button>
-          <!-- <button type="button" class="btn btn-default navbar-btn" id="boardButton">Actionboard</button>
-          <button type="button" class="btn btn-default navbar-btn" id="adminButton">Admin</button> -->
+          <button type="button" class="btn btn-default navbar-btn" id="reportButton">Reporting</button>
+          <!-- <button type="button" class="btn btn-default navbar-btn" id="adminButton">Admin</button> -->
         </div>
       </div>
       <!-- /.navbar-collapse -->
@@ -30,16 +30,33 @@
 <script>
 $('#searchButton').click(loadSearch);
 $('#homeButton').click(loadHome);
-//$('#boardButton').click(loadActionboard);
+$('#reportButton').click(loadReporting);
 //$('#adminButton').click(loadAdmin);
 
 function loadSearch(){
   $('#home').addClass("hidden");
+  $('#reportPage').addClass("hidden");
   $('#searchPage').removeClass("hidden");
+  $('#reportButton').removeClass("active");
+  $('#homeButton').removeClass("active");
+  $('#searchButton').addClass("active");
 }
 
 function loadHome(){
   $('#searchPage').addClass("hidden");
+  $('#reportPage').addClass("hidden");
   $('#home').removeClass("hidden");
+  $('#searchButton').removeClass("active");
+  $('#reportButton').removeClass("active");
+  $('#homeButton').addClass("active");
+}
+
+function loadReporting(){
+  $('#home').addClass("hidden");
+  $('#searchPage').addClass("hidden");
+  $('#reportPage').removeClass("hidden");
+  $('#homeButton').removeClass("active");
+  $('#searchButton').removeClass("active");
+  $('#reportButton').addClass("active");
 }
 </script>

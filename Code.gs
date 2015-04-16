@@ -134,7 +134,7 @@ function changeDeviceState(scan){
 function displayCheckInInfo(scan){
   var test, panel;
   
-  panel = HtmlService.createTemplateFromFile('Check_In');
+  panel = HtmlService.createTemplateFromFile('check_in');
   panel.data = scan;
   return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
 }
@@ -144,7 +144,7 @@ function displayCheckInInfo(scan){
 function displayReturnInfo(scan){
   var test, panel;
   
-  panel = HtmlService.createTemplateFromFile('Return');
+  panel = HtmlService.createTemplateFromFile('return');
   panel.data = scan;
   return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
 }
@@ -154,7 +154,7 @@ function displayReturnInfo(scan){
 function displayWarningInfo(scan){
   var test, panel;
   
-  panel = HtmlService.createTemplateFromFile('Warning');
+  panel = HtmlService.createTemplateFromFile('warning');
   panel.data = scan;
   return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
 }
@@ -164,7 +164,7 @@ function displayWarningInfo(scan){
 function displayRejectedInfo(scan){
   var test, panel;
   
-  panel = HtmlService.createTemplateFromFile('Rejected');
+  panel = HtmlService.createTemplateFromFile('rejected');
   panel.data = scan;
   return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
 }
