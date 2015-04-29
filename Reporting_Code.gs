@@ -62,7 +62,7 @@ function getMissingAssignmentData(start, end){
 
 
 function getNotReturnedData(){
-  var test, start, end, scanSheet, scans, dateFilteredScans, filteredScans, tagsSheet, tags;
+  var test, start, end, scanSheet, scans, dateFilteredScans, filteredScans, tagsSheet, tags, newScans;
   
   start = new Date(new Date().toDateString());
   end = new Date(start.getYear(),start.getMonth(),start.getDate()+1);
@@ -145,4 +145,16 @@ function refreshActionboard(){
   actionData.refreshed = refreshed;
   
   return actionData;
+}
+
+
+
+function report_notReturnedToday(){
+  var test, results, panel;
+  
+  results = getNotReturnedData();
+  panel = HtmlService.createTemplateFromFile('not_returned');
+  panel.data = results;
+  debugger;
+  return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
 }
