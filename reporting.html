@@ -43,30 +43,34 @@
                 
                 <hr/>
                 
-                <form class="form-inline">
+                <form id="returnedForm" method="post" class="form-inline">
+              
                 <div class="row">
                   <div class="col-md-9">
-                    <b>Items Returned:</b>
+                    <label class="control-label">Items Returned:</label>
+                    
                       <div class="form-group">
-                        <div class='input-group date' id='returnedStart'>
-                          <input type='text' class="form-control" placeholder="Start Time"/>
-                          <span class="input-group-addon">
-                              <span class="glyphicon glyphicon-calendar"></span>
+                        <div class='input-group input-append date' id="rstartDatePicker">
+                          <input type='date' class="form-control" placeholder="Start Time" id="returnedStart" name="returnedStart"/>
+                          <span class="input-group-addon add-on">
+                            <span class="glyphicon glyphicon-calendar"></span>
                           </span>
                         </div>
                       </div> <!-- close form-group -->
                      
                       <div class="form-group">
-                        <div class='input-group date' id='returnedEnd'>
-                            <input type='text' class="form-control" placeholder="End Time"/>
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
+                        <div class='input-group input-append date' id="rendDatePicker">
+                          <input type='date' class="form-control" placeholder="End Time" id="returnedEnd" name="returnedEnd"/>
+                          <span class="input-group-addon add-on">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                          </span>
                         </div>
                       </div> <!-- close form-group -->
+                      
                     </div>
                     <div class="col-md-3">
-                      <button type="button" class="btn btn-primary">Items Returned report</button>
+                      <button type="button" class="btn btn-primary"
+                      onclick="google.script.run.withSuccessHandler(updateReport).report_returned(this.form)">Items Returned report</button>
                     </div>
                 </div>
                 </form>

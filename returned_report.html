@@ -1,0 +1,27 @@
+<div class="well col-md-8 col-md-offset-2 text-center">
+  <h3 class="text-primary">Items Returned</h3>
+  <span><small><em>Last refreshed: <?= new Date() ?></em></small></span>
+</div>
+
+<div class="col-md-8 col-md-offset-2">
+  <table class="table table-striped">
+    <tr>
+      <th class="bg-primary">Tag Number</th>
+      <th class="bg-primary">Name</th>
+      <th class="bg-primary">Grade</th>
+      <th class="bg-primary">Bin Number</th>
+      <th class="bg-primary">Timestamp</th>
+    </tr> <!-- close header row -->
+    
+    <? for(var i=0;i<data.length;i++){ ?>
+      <tr>
+        <td><?= data[i].tagNumber ?></td>
+        <td><?= data[i].name ?></td>
+        <td><?= data[i].grade ?></td>
+        <td><?= data[i].binNumber ?></td>
+        <td><?= data[i].timeStamp ?></td>
+      </tr>
+    <? } ?>
+  </table>
+  <p><b>Total Records: <?= data.length ?></b></p>
+</div>

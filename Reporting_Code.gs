@@ -153,7 +153,7 @@ function report_notReturnedToday(){
   var test, results, panel;
   
   results = getNotReturnedData();
-  panel = HtmlService.createTemplateFromFile('not_returned');
+  panel = HtmlService.createTemplateFromFile('not_returned_report');
   panel.data = results;
   return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
 }
@@ -163,8 +163,8 @@ function report_notReturnedToday(){
 function getDateFilters(formObj){
   var test, s, e, start, end;
   
-  s = formObj.checkedStart.toString().split("-");
-  e = formObj.checkedEnd.toString().split("-");
+  s = formObj[Object.keys(formObj)[0]].toString().split("-");
+  e = formObj[Object.keys(formObj)[1]].toString().split("-");
   start = new Date(s[0],s[1]-1,s[2]);
   end = new Date(e[0],e[1]-1,e[2],23,59,59);
   return [start, end];
@@ -178,7 +178,20 @@ function report_checkedIn(formObj){
   range = getDateFilters(formObj);
 
   results = getCheckInData(range[0], range[1]);
-  panel = HtmlService.createTemplateFromFile('checked_in');
+  panel = HtmlService.createTemplateFromFile('checked_in_report');
+  panel.data = results;
+  return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
+}
+
+
+
+function report_returned(formObj){
+  var test, range, results, panel;
+  Logger.log(formObj);
+  range = getDateFilters(formObj);
+
+  results = getReturnData(range[0], range[1]);
+  panel = HtmlService.createTemplateFromFile('returned_report');
   panel.data = results;
   return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
 }
