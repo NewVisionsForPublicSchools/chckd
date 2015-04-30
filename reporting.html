@@ -9,31 +9,34 @@
           </div>
           <div class="modal-body">
             <div class="container-fluid">
-              <form class="form-inline">
+              <form id="checkedInForm" method="post" class="form-inline">
               
                 <div class="row">
                   <div class="col-md-9">
-                    <b>Items Checked In:</b>
+                    <label class="control-label">Items Checked In:</label>
+                    
                       <div class="form-group">
-                        <div class='input-group date' id='checkedInStart'>
-                          <input type='text' class="form-control" placeholder="Start Time"/>
-                          <span class="input-group-addon">
-                              <span class="glyphicon glyphicon-calendar"></span>
+                        <div class='input-group input-append date' id="startDatePicker">
+                          <input type='date' class="form-control" placeholder="Start Time" id="checkedStart" name="checkedStart"/>
+                          <span class="input-group-addon add-on">
+                            <span class="glyphicon glyphicon-calendar"></span>
                           </span>
                         </div>
                       </div> <!-- close form-group -->
                      
                       <div class="form-group">
-                        <div class='input-group date' id='checkedInEnd'>
-                            <input type='text' class="form-control" placeholder="End Time"/>
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
+                        <div class='input-group input-append date' id="endDatePicker">
+                          <input type='date' class="form-control" placeholder="End Time" id="checkedEnd" name="checkedEnd"/>
+                          <span class="input-group-addon add-on">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                          </span>
                         </div>
                       </div> <!-- close form-group -->
+                      
                     </div>
                     <div class="col-md-3">
-                      <button type="button" class="btn btn-primary">Items Checked In report</button>
+                      <button type="button" class="btn btn-primary"
+                      onclick="google.script.run.withSuccessHandler(updateReport).report_checkedIn(this.form)">Items Checked In report</button>
                     </div>
                 </div>
                 </form>
@@ -119,7 +122,7 @@
           </div> <!-- close modal-footer -->
         </div>
       </div>
-    </div> <!-- close modal -->
+    </div> <!-- close report page modal -->
 
     <div class="jumbotron col-md-8 col-md-offset-2" id="actionTron">
       <div class="title">
@@ -174,13 +177,12 @@
     </div> <!-- close reportParams -->
     
     <div id="reportDiv"></div>
-
+    
   </div> <!-- close container -->
 
 
 
 <script>
-$('#checkedInToday').click(runCheckedInReport);
 $('#refreshBtn').click(showActionboard);
 $('.dropdown-toggle').dropdown();
 
@@ -193,43 +195,5 @@ function updateReport(resultHtml){
 function showActionboard(){
   $('#actionPanel').removeClass("hidden");
 }
-
-function runCheckedInReport(){
-  console.log("This is working");
-  $('#reportDiv').removeClass("hidden");
-}
-
-$(function () {
-    $('#checkedInStart').datetimepicker();
-    $('#checkedInEnd').datetimepicker();
-    $("#checkedInStart").on("dp.change", function (e) {
-        $('checkedInEnd').data("DateTimePicker").minDate(e.date);
-    });
-    $("#checkedInEnd").on("dp.change", function (e) {
-        $('#checkedInStart').data("DateTimePicker").maxDate(e.date);
-    });
-});
-
-$(function () {
-    $('#returnedStart').datetimepicker();
-    $('#returnedEnd').datetimepicker();
-    $("#returnedStart").on("dp.change", function (e) {
-        $('returnedEnd').data("DateTimePicker").minDate(e.date);
-    });
-    $("#returnedEnd").on("dp.change", function (e) {
-        $('#returnedStart').data("DateTimePicker").maxDate(e.date);
-    });
-});
-
-$(function () {
-    $('#missingStart').datetimepicker();
-    $('#missingEnd').datetimepicker();
-    $("#missingStart").on("dp.change", function (e) {
-        $('missingEnd').data("DateTimePicker").minDate(e.date);
-    });
-    $("#missingEnd").on("dp.change", function (e) {
-        $('#missingStart').data("DateTimePicker").maxDate(e.date);
-    });
-});
 
 </script>

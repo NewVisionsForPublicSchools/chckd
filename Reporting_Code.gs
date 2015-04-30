@@ -155,6 +155,30 @@ function report_notReturnedToday(){
   results = getNotReturnedData();
   panel = HtmlService.createTemplateFromFile('not_returned');
   panel.data = results;
-  debugger;
+  return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
+}
+
+
+
+function getDateFilters(formObj){
+  var test, s, e, start, end;
+  
+  s = formObj.checkedStart.toString().split("-");
+  e = formObj.checkedEnd.toString().split("-");
+  start = new Date(s[0],s[1]-1,s[2]);
+  end = new Date(e[0],e[1]-1,e[2],23,59,59);
+  return [start, end];
+}
+
+
+
+function report_checkedIn(formObj){
+  var test, range, results, panel;
+  
+  range = getDateFilters(formObj);
+
+  results = getCheckInData(range[0], range[1]);
+  panel = HtmlService.createTemplateFromFile('checked_in');
+  panel.data = results;
   return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
 }
