@@ -77,30 +77,34 @@
                 
                 <hr/>
                 
-                <form class="form-inline">
+                <form id="missingForm" method="post" class="form-inline">
+              
                 <div class="row">
                   <div class="col-md-9">
-                    <b>Missing Assignments:</b>
+                    <label class="control-label">Missing Assignments:</label>
+                    
                       <div class="form-group">
-                        <div class='input-group date' id='missingStart'>
-                          <input type='text' class="form-control" placeholder="Start Time"/>
-                          <span class="input-group-addon">
-                              <span class="glyphicon glyphicon-calendar"></span>
+                        <div class='input-group input-append date' id="mstartDatePicker">
+                          <input type='date' class="form-control" placeholder="Start Time" id="missingStart" name="missingStart"/>
+                          <span class="input-group-addon add-on">
+                            <span class="glyphicon glyphicon-calendar"></span>
                           </span>
                         </div>
                       </div> <!-- close form-group -->
                      
                       <div class="form-group">
-                        <div class='input-group date' id='missingEnd'>
-                            <input type='text' class="form-control" placeholder="End Time"/>
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
+                        <div class='input-group input-append date' id="mendDatePicker">
+                          <input type='date' class="form-control" placeholder="End Time" id="missingEnd" name="missingEnd"/>
+                          <span class="input-group-addon add-on">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                          </span>
                         </div>
                       </div> <!-- close form-group -->
+                      
                     </div>
                     <div class="col-md-3">
-                      <button type="button" class="btn btn-primary">Missing Assignments report</button>
+                      <button type="button" class="btn btn-primary"
+                      onclick="google.script.run.withSuccessHandler(updateReport).report_missingAssignments(this.form)">Missing Assignments report</button>
                     </div>
                 </div>
                 </form>

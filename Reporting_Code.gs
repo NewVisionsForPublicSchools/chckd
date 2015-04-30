@@ -187,11 +187,24 @@ function report_checkedIn(formObj){
 
 function report_returned(formObj){
   var test, range, results, panel;
-  Logger.log(formObj);
+
   range = getDateFilters(formObj);
 
   results = getReturnData(range[0], range[1]);
   panel = HtmlService.createTemplateFromFile('returned_report');
+  panel.data = results;
+  return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
+}
+
+
+
+function report_missingAssignments(formObj){
+  var test, range, results, panel;
+  
+  range = getDateFilters(formObj);
+
+  results = getMissingAssignmentData(range[0], range[1]);
+  panel = HtmlService.createTemplateFromFile('missing_assignments_report');
   panel.data = results;
   return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
 }
