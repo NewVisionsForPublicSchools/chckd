@@ -1,0 +1,36 @@
+<div id="actionDiv" class="col-md-8 col-md-offset-2 text-center">
+  <div class="panel panel-primary" id="actionPanel">
+    <div class="panel-heading">
+        <h3 class="panel-title">Actionboard</h3>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-3 text-center">
+          <h1 id="checkedNum" class="action-success"><?= data.checked ?></h1>
+          <a id="checkedInToday" href="#" class="text-primary h3" 
+          onclick="google.script.run.withSuccessHandler(updateReport).report_checkedInToday()"><strong>Items Checked In Today</strong></a>
+        </div>
+        <div class="col-md-3 text-center">
+          <h1 class="action-success"><?= data.returned ?></h1>
+          <a href="#" class="text-primary h3" onclick="google.script.run.withSuccessHandler(updateReport).report_returnedToday()">
+          <strong>Items Returned Today</strong></a>
+        </div>
+        <div class="col-md-3 text-center">
+          <h1 class="action-success"><?= data.missing ?></h1>
+          <a href="#" class="text-primary h3" onclick="google.script.run.withSuccessHandler(updateReport).report_missingAssignmentsToday()">
+          <strong>Device Tags Missing Assignments Today</strong></a>
+        </div>
+        <div class="col-md-3 text-center">
+          <h1 class="action-success"><?= data.notReturned ?></h1>
+          <a href="#" class="text-primary h3" onclick="google.script.run.withSuccessHandler(updateReport).report_notReturnedToday()">
+          <strong>Items Not Returned Today</strong></a>
+        </div>
+      </div> <!-- close row -->
+      <br/>
+      <div class="row">
+        <small><em><b>Last refreshed:</b> <?= new Date(); ?></em></small>
+      </div>
+    </div> <!-- close panel body -->
+    
+  </div> <!-- close panel -->
+</div>
