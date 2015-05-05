@@ -6,24 +6,24 @@
     <div class="panel-body">
       <div class="row">
         <div class="col-md-3 text-center">
-          <h1 id="checkedNum" class="action-success"><?= data.checked ?></h1>
+          <h1 id="checkedNum" class="action-success"><?= data[0] ?></h1>
           <a id="checkedInToday" href="#" class="text-primary h3" 
           onclick="google.script.run.withSuccessHandler(updateReport).report_checkedInToday()"><strong>Items Checked In Today</strong></a>
         </div>
         <div class="col-md-3 text-center">
-          <h1 class="action-success"><?= data.returned ?></h1>
+          <h1 class="action-success"><?= data[1] ?></h1>
           <a href="#" class="text-primary h3" onclick="google.script.run.withSuccessHandler(updateReport).report_returnedToday()">
           <strong>Items Returned Today</strong></a>
         </div>
         <div class="col-md-3 text-center">
-          <h1 class="action-success"><?= data.missing ?></h1>
+          <h1 class="action-success"><?= data[2] ?></h1>
           <a href="#" class="text-primary h3" onclick="google.script.run.withSuccessHandler(updateReport).report_missingAssignmentsToday()">
-          <strong>Device Tags Missing Assignments Today</strong></a>
+          <strong>Missing Assignments Today</strong></a>
         </div>
         <div class="col-md-3 text-center">
-          <h1 class="action-success"><?= data.notReturned ?></h1>
+          <h1 class="action-success"><?= data[3] ?></h1>
           <a href="#" class="text-primary h3" onclick="google.script.run.withSuccessHandler(updateReport).report_notReturnedToday()">
-          <strong>Items Not Returned Today</strong></a>
+          <strong>Items Not Returned</strong></a>
         </div>
       </div> <!-- close row -->
       <br/>

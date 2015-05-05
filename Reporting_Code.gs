@@ -139,11 +139,15 @@ function reportTest(){
 
 
 function report_notReturnedToday(){
-  var test, results, panel;
+  var test, results, panel, range;
+  
+  range = setDateToCurrent();
   
   results = getNotReturnedData();
   panel = HtmlService.createTemplateFromFile('not_returned_report');
   panel.data = results;
+  panel.start = range[0];
+  panel.end = range[1];
   return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
 }
 
@@ -152,9 +156,9 @@ function report_notReturnedToday(){
 function getDateFilters(formObj){
   var test, s, e, start, end, range;
   
-  if(formObj[Object.keys(formObj)[0]]){
-    s = formObj[Object.keys(formObj)[0]].toString().split("-");
-    e = formObj[Object.keys(formObj)[1]].toString().split("-");
+  if(formObj.start){
+    s = formObj.start.toString().split("-");
+    e = formObj.end.toString().split("-");
     start = new Date(s[0],s[1]-1,s[2]);
     end = new Date(e[0],e[1]-1,e[2],23,59,59);
   }
@@ -169,38 +173,53 @@ function getDateFilters(formObj){
 
 
 function report_checkedIn(formObj){
-  var test, range, results, panel;
+  var test, range, results, panel, obj={};
   
-  range = getDateFilters(formObj);
+  obj.start = formObj.checkedStart;
+  obj.end = formObj.checkedEnd;
+  
+  range = getDateFilters(obj);
 
   results = getCheckInData(range[0], range[1]);
   panel = HtmlService.createTemplateFromFile('checked_in_report');
   panel.data = results;
+  panel.start = range[0];
+  panel.end = range[1];
   return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
 }
 
 
 
 function report_returned(formObj){
-  var test, range, results, panel;
+  var test, range, results, panel, obj={};
 
-  range = getDateFilters(formObj);
+  obj.start = formObj.returnedStart;
+  obj.end = formObj.returnedEnd;
+  
+  range = getDateFilters(obj);
 
   results = getReturnData(range[0], range[1]);
   panel = HtmlService.createTemplateFromFile('returned_report');
   panel.data = results;
+  panel.start = range[0];
+  panel.end = range[1];
   return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
 }
 
 
 
 function report_missingAssignments(formObj){
-  var test, range, results, panel;
+  var test, range, results, panel, obj={};
   
-  range = getDateFilters(formObj);
+  obj.start = formObj.missingStart;
+  obj.end = formObj.missingEnd;
+  
+  range = getDateFilters(obj);
 
   results = getMissingAssignmentData(range[0], range[1]);
   panel = HtmlService.createTemplateFromFile('missing_assignments_report');
   panel.data = results;
+  panel.start = range[0];
+  panel.end = range[1];
   return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
 }

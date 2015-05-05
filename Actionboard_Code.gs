@@ -1,15 +1,15 @@
 function refreshActionboard(){
  var test, panel, results, today, start, end;
   
-  
-  results = {};
   start = setDateToCurrent()[0];
   end = setDateToCurrent()[1];
 
-  results.checked = getCheckInData(start, end).length;
-  results.returned = getReturnData(start, end).length;
-  results.missing = getMissingAssignmentData(start, end).length;
-  results.notReturned = getNotReturnedData().length;
+  results = [
+    getCheckInData(start, end).length,
+    getReturnData(start, end).length,
+    getMissingAssignmentData(start, end).length,
+    getNotReturnedData().length
+  ];
   
   panel = HtmlService.createTemplateFromFile('actionboard');
   panel.data = results;
@@ -26,6 +26,8 @@ function report_checkedInToday(){
   results = getCheckInData(range[0], range[1]);
   panel = HtmlService.createTemplateFromFile('checked_in_report');
   panel.data = results;
+  panel.start = range[0];
+  panel.end = range[1];
   return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
 }
 
@@ -39,6 +41,8 @@ function report_returnedToday(){
   results = getReturnData(range[0], range[1]);
   panel = HtmlService.createTemplateFromFile('returned_report');
   panel.data = results;
+  panel.start = range[0];
+  panel.end = range[1];
   return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
 }
 
@@ -52,6 +56,8 @@ function report_missingAssignmentsToday(){
   results = getMissingAssignmentData(range[0], range[1]);
   panel = HtmlService.createTemplateFromFile('missing_assignments_report');
   panel.data = results;
+  panel.start = range[0];
+  panel.end = range[1];
   return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
 }
 
