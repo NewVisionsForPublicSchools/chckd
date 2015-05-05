@@ -131,20 +131,9 @@ function reportTest(){
   
   startDate = new Date("3/30/2015");
   endDate = new Date("4/02/2015");
-  
+  debugger;
   data = getNotCheckedInData();
   debugger;
-}
-
-
-
-function refreshActionboard(){
-  var test, refreshed, actionData={};
-  
-  refreshed = new Date();
-  actionData.refreshed = refreshed;
-  
-  return actionData;
 }
 
 
@@ -161,12 +150,19 @@ function report_notReturnedToday(){
 
 
 function getDateFilters(formObj){
-  var test, s, e, start, end;
+  var test, s, e, start, end, range;
   
-  s = formObj[Object.keys(formObj)[0]].toString().split("-");
-  e = formObj[Object.keys(formObj)[1]].toString().split("-");
-  start = new Date(s[0],s[1]-1,s[2]);
-  end = new Date(e[0],e[1]-1,e[2],23,59,59);
+  if(formObj[Object.keys(formObj)[0]]){
+    s = formObj[Object.keys(formObj)[0]].toString().split("-");
+    e = formObj[Object.keys(formObj)[1]].toString().split("-");
+    start = new Date(s[0],s[1]-1,s[2]);
+    end = new Date(e[0],e[1]-1,e[2],23,59,59);
+  }
+  else{
+    range = setDateToCurrent();
+    start = range[0];
+    end = range[1];
+  }
   return [start, end];
 }
 

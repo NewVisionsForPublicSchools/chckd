@@ -35,7 +35,7 @@
                       
                     </div>
                     <div class="col-md-3">
-                      <button type="button" class="btn btn-primary"
+                      <button type="button" class="btn btn-primary" disabled="true" id="checkedBtn"
                       onclick="google.script.run.withSuccessHandler(updateReport).report_checkedIn(this.form)">Items Checked In report</button>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                       
                     </div>
                     <div class="col-md-3">
-                      <button type="button" class="btn btn-primary"
+                      <button type="button" class="btn btn-primary" id="returnedBtn" disabled="true"
                       onclick="google.script.run.withSuccessHandler(updateReport).report_returned(this.form)">Items Returned report</button>
                     </div>
                 </div>
@@ -103,7 +103,7 @@
                       
                     </div>
                     <div class="col-md-3">
-                      <button type="button" class="btn btn-primary"
+                      <button type="button" class="btn btn-primary" id="missingBtn" disabled="true"
                       onclick="google.script.run.withSuccessHandler(updateReport).report_missingAssignments(this.form)">Missing Assignments report</button>
                     </div>
                 </div>
@@ -162,8 +162,112 @@
 
 
 <script>
+var CHECKEDRANGE = {};
+var RETURNEDRANGE = {};
+var MISSINGRANGE = {};
+
 $('#refreshBtn').click(showActionboard);
 $('.dropdown-toggle').dropdown();
+
+$('#checkedStart').on("change", function(){
+  CHECKEDRANGE.start = this.value;
+  var status = validateRange(CHECKEDRANGE);
+  if(status){
+    $('#checkedBtn').prop("disabled", false);
+    $('#startDatePicker').removeClass("has-error").addClass("has-success");
+    $('#endDatePicker').removeClass("has-error").addClass("has-success");
+  }
+  else{
+    $('#checkedBtn').prop("disabled", true);
+    $('#startDatePicker').removeClass("has-success").addClass("has-error");
+    $('#endDatePicker').removeClass("has-success").addClass("has-error");
+  }
+});
+
+$('#checkedEnd').on("change", function(){
+  CHECKEDRANGE.end = this.value;
+  var status = validateRange(CHECKEDRANGE);
+  if(status == true){
+    $('#checkedBtn').prop("disabled", false);
+    $('#startDatePicker').removeClass("has-error").addClass("has-success");
+    $('#endDatePicker').removeClass("has-error").addClass("has-success");
+  }
+  else{
+    $('#checkedBtn').prop("disabled", true);
+    $('#startDatePicker').removeClass("has-success").addClass("has-error");
+    $('#endDatePicker').removeClass("has-success").addClass("has-error");
+  }
+});
+
+$('#returnedStart').on("change", function(){
+  RETURNEDRANGE.start = this.value;
+  var status = validateRange(RETURNEDRANGE);
+  if(status){
+    $('#returnedBtn').prop("disabled", false);
+    $('#rstartDatePicker').removeClass("has-error").addClass("has-success");
+    $('#rendDatePicker').removeClass("has-error").addClass("has-success");
+  }
+  else{
+    $('#returnedBtn').prop("disabled", true);
+    $('#rstartDatePicker').removeClass("has-success").addClass("has-error");
+    $('#rendDatePicker').removeClass("has-success").addClass("has-error");
+  }
+});
+
+$('#returnedEnd').on("change", function(){
+  RETURNEDRANGE.end = this.value;
+  var status = validateRange(RETURNEDRANGE);
+  if(status == true){
+    $('#returnedBtn').prop("disabled", false);
+    $('#rstartDatePicker').removeClass("has-error").addClass("has-success");
+    $('#rendDatePicker').removeClass("has-error").addClass("has-success");
+  }
+  else{
+    $('#returnedBtn').prop("disabled", true);
+    $('#rstartDatePicker').removeClass("has-success").addClass("has-error");
+    $('#rendDatePicker').removeClass("has-success").addClass("has-error");
+  }
+});
+
+$('#missingStart').on("change", function(){
+  MISSINGRANGE.start = this.value;
+  var status = validateRange(MISSINGRANGE);
+  if(status){
+    $('#missingBtn').prop("disabled", false);
+    $('#mstartDatePicker').removeClass("has-error").addClass("has-success");
+    $('#mendDatePicker').removeClass("has-error").addClass("has-success");
+  }
+  else{
+    $('#missingBtn').prop("disabled", true);
+    $('#mstartDatePicker').removeClass("has-success").addClass("has-error");
+    $('#mendDatePicker').removeClass("has-success").addClass("has-error");
+  }
+});
+
+$('#missingEnd').on("change", function(){
+  MISSINGRANGE.end = this.value;
+  var status = validateRange(MISSINGRANGE);
+  if(status == true){
+    $('#missingBtn').prop("disabled", false);
+    $('#mstartDatePicker').removeClass("has-error").addClass("has-success");
+    $('#mendDatePicker').removeClass("has-error").addClass("has-success");
+  }
+  else{
+    $('#missingBtn').prop("disabled", true);
+    $('#mstartDatePicker').removeClass("has-success").addClass("has-error");
+    $('#mendDatePicker').removeClass("has-success").addClass("has-error");
+  }
+});
+
+function validateRange(range){
+  var enable = true;
+  
+  var start = new Date(range.start).getTime();
+  var end = new Date(range.end).getTime();
+  
+  enable = start <= end ? true : false;
+  return enable;
+}
 
 function updateReport(resultHtml){
   var outputDiv = document.getElementById('reportDiv');
