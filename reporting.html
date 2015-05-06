@@ -109,20 +109,6 @@
                 </div>
                 </form>
                 
-                <hr/>
-                
-                <form class="form-inline">
-                  <div class="row">
-                    <div class="col-md-9">
-                      <b>Items Not Returned Today:</b>
-                    </div>
-                    <div class="col-md-3">
-                      <button type="button" class="btn btn-primary" id="notReturnedBtn"
-                      onclick="google.script.run.withSuccessHandler(updateReport).report_notReturnedToday()">Items Not Returned report</button>
-                    </div>
-                  </div>
-                </form>
-      
             </div>
           </div> <!-- close modal-body -->
           <div class="modal-footer">
@@ -166,7 +152,6 @@ var CHECKEDRANGE = {};
 var RETURNEDRANGE = {};
 var MISSINGRANGE = {};
 
-$('#refreshBtn').click(showActionboard);
 $('.dropdown-toggle').dropdown();
 
 $('#checkedStart').on("change", function(){
