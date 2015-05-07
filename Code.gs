@@ -1,90 +1,170 @@
-<html lang="en">
+PAGETITLE = PropertiesService.getScriptProperties().getProperty(pageTitle);
+CHCKDSS = PropertiesService.getScriptProperties().getProperty(chckdSs);
 
-<head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" /> 
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.js"></script>
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.css"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
-  <link data-require="bootstrap-css@*" data-semver="3.3.1" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
-  <?!= include('style'); ?>
-  <?!= include('navbar'); ?>
-  <?!= include('search'); ?>
-  <?!= include('reporting'); ?>
-</head>
-
-<body>
-
-  <div class="container-fluid" id="home">
-
-    <div class="jumbotron col-md-8 col-md-offset-2">
-      <div class="title">
-        <h1 class="text-center" id="jumbotron-title">chckd <small>Check In/Return</small></h1>
-      </div> <!-- close title -->
-      <div id="scan">
-      <div class="col-md-6 col-md-offset-3 text-center">
-        <form class="form-inline" id="myform" method="get" action="" onsubmit="return false">
-          
-            <div class="form-group">
-              <input type="text" class="form-control" name="studentScan" id="studentScan" placeholder="Scan device tag">
-            </div> <!-- close form-group -->
-            <button type="button" class="btn btn-primary" id="submitBtn"
-            onclick="google.script.run.withSuccessHandler(updateResults).processScan(this.parentNode)">Submit</button>
-          
-        </form> <!-- close form -->
-        </div>
-      </div> <!-- close scan -->
-
-    </div> <!-- close jumbotron -->
-
-    <div id="results"></div>
-
-  </div> <!-- close container -->
-   
-</body>
-
-</html>
+function doGet() {
+  return HtmlService
+      .createTemplateFromFile('index')
+      .evaluate()
+      .setSandboxMode(HtmlService.SandboxMode.IFRAME).setTitle(PAGETITLE);
+}
 
 
 
-<script>
-//$('#navbar').load('navbar.html')
-$(document).ready(setFocus);
+function include(filename) {
+  return HtmlService.createHtmlOutputFromFile(filename)
+      .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+      .getContent();
+}
+
+
+
+function processScan(formObj){
+  var test, deviceScan, currentTime, student, scan;
+  
+  deviceScan = formObj.studentScan.toUpperCase();
+  currentTime = new Date();
+  student = getStudentInfo(deviceScan);
+//  debugger;
+  
+  scan = {
+    tagNumber: deviceScan,
+    timeStamp: currentTime,
+    name: student.student || "Not assigned",
+    binNumber: student.binNumber || "Not assigned",
+    status: !student.status,
+    grade: student.grade || "Not assigned"
+  };
+
+  if(student != "Tag does not exist"){
+    addScanToSheet(scan);
+    changeDeviceState(scan);
     
-    
-
-$('#studentScan').on("keyup", function(){
-  if(event.keyCode == 13){
-    $('#submitBtn').trigger("click");
+    switch(scan.name != "Not assigned"){
+      case true:
+        if(scan.status === true){
+          return displayCheckInInfo(scan)
+        }
+        else{
+          return displayReturnInfo(scan);
+        }
+        break;
+        
+      case false:
+        if(scan.status === true){
+          return displayWarningInfo(scan)
+        }
+        else{
+          return displayReturnInfo(scan);
+        }
+        break;
+        
+      default:
+        break;
+    }
   }
-});
-
-
-
-function setFocus() {
-  var input = document.getElementById ("studentScan");
-  input.focus ();
+  else{
+    return displayRejectedInfo(scan);
+  }
 }
 
 
 
-function updateResults(resultHtml){
-  document.getElementById("myform").reset();
-  setFocus();
-  var outputDiv = document.getElementById('results');
-  outputDiv.innerHTML = resultHtml;
+function getStudentInfo(deviceScan){
+  var test, tagNumber, studentSheet, deviceTags, tagRecord;
+  
+  tagNumber = deviceScan;
+  studentSheet = CHCKDSS.getSheetByName('Students');
+  deviceTags = NVSL.getRowsData(studentSheet);
+  
+  function getTagRecord(e){
+    return e.tagNumber === tagNumber;
+  }
+  
+  tagRecord = deviceTags.filter(getTagRecord)[0] || "Tag does not exist";
+  return tagRecord;
 }
 
 
 
-function toggle_visibility(id) {
- var e = document.getElementById(id);
- if(e.style.display == 'block')
-    e.style.display = 'none';
- else
-    e.style.display = 'block';
+function addScanToSheet(scan){
+  var test, scanSheet, headerRange, record;
+  
+  scanSheet = CHCKDSS.getSheetByName('Scans');
+  headerRange = scanSheet.getRange(1,1,1,6)
+  record = [scan];
+  
+  NVSL.setRowsData(scanSheet, record, headerRange, scanSheet.getLastRow()+1);
+  
 }
-</script>
+
+
+
+function test(){
+  var test, formObj;
+  
+  formObj = {
+    studentScan: "AMS310"
+  }
+  
+  processScan(formObj);
+}
+
+
+
+function changeDeviceState(scan){
+  var test, tagNumber, status, studentSheet, deviceTags, tagIndex, tagRecords, statusRange;
+  
+  tagNumber = scan.tagNumber;
+  status = scan.status;
+  studentSheet = CHCKDSS.getSheetByName('Students');
+  deviceTags = NVSL.getRowsData(studentSheet);
+  
+  function getTagRecord(e){
+    return e.tagNumber;
+  }
+  
+  tagRecords = deviceTags.map(getTagRecord);
+  tagIndex = tagRecords.indexOf(tagNumber);
+  statusRange = studentSheet.getRange(tagIndex+2,5,1,1);
+  statusRange.setValue(status);
+}
+
+
+
+function displayCheckInInfo(scan){
+  var test, panel;
+  
+  panel = HtmlService.createTemplateFromFile('check_in');
+  panel.data = scan;
+  return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
+}
+
+
+
+function displayReturnInfo(scan){
+  var test, panel;
+  
+  panel = HtmlService.createTemplateFromFile('return');
+  panel.data = scan;
+  return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
+}
+
+
+
+function displayWarningInfo(scan){
+  var test, panel;
+  
+  panel = HtmlService.createTemplateFromFile('warning');
+  panel.data = scan;
+  return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
+}
+
+
+
+function displayRejectedInfo(scan){
+  var test, panel;
+  
+  panel = HtmlService.createTemplateFromFile('rejected');
+  panel.data = scan;
+  return panel.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent();
+}
