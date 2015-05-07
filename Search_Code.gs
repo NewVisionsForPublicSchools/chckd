@@ -1,11 +1,11 @@
-chckdSs = SpreadsheetApp.openById('1ldLbEyo5kfVOlPhhQnR5FCYg8-9Z7LM1aHpQo6vkQWQ');
+var CHCKDSS = PropertiesService.getScriptProperties().getProperty(chckdSs);
 
 function getStudent(formObj){
   var test, studentQuery, studentsSheet, students, names, tags, studentQueryResults, tagQueryResults,
       records, binQueryResults, bins;
 
   studentQuery = formObj.studentSearch.toUpperCase();
-  studentsSheet = chckdSs.getSheetByName('Students');
+  studentsSheet = CHCKDSS.getSheetByName('Students');
   students = NVSL.getRowsData(studentsSheet);
   names = students.map(function (e){
     return e.student.toUpperCase();

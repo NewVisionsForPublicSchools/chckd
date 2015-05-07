@@ -1,5 +1,5 @@
-PAGETITLE = PropertiesService.getScriptProperties().getProperty(pageTitle);
-CHCKDSS = PropertiesService.getScriptProperties().getProperty(chckdSs);
+var PAGETITLE = PropertiesService.getScriptProperties().getProperty(pageTitle);
+var CHCKDSS = PropertiesService.getScriptProperties().getProperty(chckdSs);
 
 function doGet() {
   return HtmlService
