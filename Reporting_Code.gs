@@ -1,4 +1,4 @@
-CHCKDSS = PropertiesService.getScriptProperties().getProperty('chckdSs');
+var CHCKDSS = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('chckdSs'));
 
 
 

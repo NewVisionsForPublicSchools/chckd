@@ -1,4 +1,4 @@
-var CHCKDSS = PropertiesService.getScriptProperties().getProperty('chckdSs');
+var CHCKDSS = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('chckdSs'));
 
 function getStudent(formObj){
   var test, studentQuery, studentsSheet, students, names, tags, studentQueryResults, tagQueryResults,
