@@ -1,4 +1,4 @@
-CHCKDSS = PropertiesService.getScriptProperties().getProperty(chckdSs);
+CHCKDSS = PropertiesService.getScriptProperties().getProperty('chckdSs');
 
 
 
