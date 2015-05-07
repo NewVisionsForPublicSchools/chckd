@@ -1,11 +1,11 @@
-scansSs = SpreadsheetApp.openById('1ldLbEyo5kfVOlPhhQnR5FCYg8-9Z7LM1aHpQo6vkQWQ');
+CHCKDSS = PropertiesService.getScriptProperties().getProperty(chckdSs);
 
 
 
 function getCheckInData(start, end){
   var test, scanSheet, scans, startDate, endDate, filteredScans;
   
-  scanSheet = scansSs.getSheetByName('Scans');
+  scanSheet = CHCKDSS.getSheetByName('Scans');
   scans = NVSL.getRowsData(scanSheet);
   startDate = start.getTime();
   endDate = end.getTime();
@@ -27,7 +27,7 @@ function getCheckInData(start, end){
 function getReturnData(start, end){
   var test, scanSheet, scans, startDate, endDate, filteredScans;
   
-  scanSheet = scansSs.getSheetByName('Scans');
+  scanSheet = CHCKDSS.getSheetByName('Scans');
   scans = NVSL.getRowsData(scanSheet);
   startDate = start.getTime();
   endDate = end.getTime();
@@ -66,9 +66,9 @@ function getNotReturnedData(){
   
   start = new Date(new Date().toDateString());
   end = new Date(start.getYear(),start.getMonth(),start.getDate()+1);
-  scanSheet = scansSs.getSheetByName('Scans');
+  scanSheet = CHCKDSS.getSheetByName('Scans');
   scans = NVSL.getRowsData(scanSheet);
-  tagsSheet = scansSs.getSheetByName('Students');
+  tagsSheet = CHCKDSS.getSheetByName('Students');
   tags = NVSL.getRowsData(tagsSheet);
   
   function filterDate(e){
@@ -99,7 +99,7 @@ function getNotCheckedInData(){
   
   start = new Date(new Date().toDateString());
   end = new Date(start.getYear(),start.getMonth(),start.getDate()+1);
-  tagsSheet = scansSs.getSheetByName('Students');
+  tagsSheet = CHCKDSS.getSheetByName('Students');
   tags = NVSL.getRowsData(tagsSheet);
   
   checkIns = getCheckInData(start, end);
